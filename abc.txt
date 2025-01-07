@@ -1,0 +1,85 @@
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer className="hero-gradient pt-20 pb-10 relative overflow-hidden">
+      {/* Background particles/decorative element */}
+      <div id="particles-js" className="absolute inset-0"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid md:grid-cols-4 gap-8 mb-16">
+          {/* Company Section */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6 text-white playfair">Company</h3>
+            <ul className="space-y-4">
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Blog</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Press</a></li>
+            </ul>
+          </div>
+
+          {/* Products Section */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6 text-white playfair">Products</h3>
+            <ul className="space-y-4">
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Features</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Pricing</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Security</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Enterprise</a></li>
+            </ul>
+          </div>
+
+          {/* Resources Section */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6 text-white playfair">Resources</h3>
+            <ul className="space-y-4">
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Documentation</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Guides</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="#" className="text-blue-200 hover:text-white transition-colors">API Status</a></li>
+            </ul>
+          </div>
+
+          {/* Connect Section */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6 text-white playfair">Connect</h3>
+            <ul className="space-y-4">
+              <li>
+                <a href="#" className="text-blue-200 hover:text-white transition-colors flex items-center gap-2">
+                  <i className="fab fa-twitter"></i>
+                  Twitter
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-blue-200 hover:text-white transition-colors flex items-center gap-2">
+                  <i className="fab fa-linkedin"></i>
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-blue-200 hover:text-white transition-colors flex items-center gap-2">
+                  <i className="fab fa-facebook"></i>
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-blue-200 hover:text-white transition-colors flex items-center gap-2">
+                  <i className="fab fa-instagram"></i>
+                  Instagram
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="border-t border-white/10 pt-8 mt-8 text-center">
+          <p className="text-blue-200">&copy; 2025 Futuristic Pay. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

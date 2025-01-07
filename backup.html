@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Payments</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        
+        .playfair {
+            font-family: "Playfair Display", serif;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #4F46E5;
+            transition: width 0.3s ease-in-out;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-link {
+            position: relative;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+            padding-left: 1.5rem;
+        }
+
+        .menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Smooth Scroll Styles */
+        html.has-scroll-smooth {
+            overflow: hidden;
+        }
+
+        .scroll-content {
+            min-height: 100vh;
+        }
+        .hero-gradient {
+            /* background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%); */
+            /* background-image: linear-gradient(to top, #303030 0%, #a6c1ee 100%); */
+            /* background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%); */
+            /* background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+             */
+             /* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
+             /* background-image: linear-gradient(to right, #243949 0%, #517fa4 100%); */
+             background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+        }
+
+        .hero-card {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Smooth Scroll Styles */
+        html.has-scroll-smooth {
+            overflow: hidden;
+        }
+
+        .scroll-content {
+            min-height: 100vh;
+        }
+
+        /* Animation Classes */
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div data-scroll-container>
+        <nav class="bg-white shadow-sm fixed w-full z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center" data-aos="fade-right">
+                        <span class="text-2xl font-semibold playfair text-gray-800">Futuristic <span class="text-blue-400">Pay</span></span>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center space-x-8" data-aos="fade-left">
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">Home</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">Features</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">Pricing</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">About</a>
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200">
+                            Get Started
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-button" class="text-gray-700 hover:text-indigo-600 focus:outline-none p-2 rounded-lg hover:bg-gray-100">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Backdrop -->
+        <div id="menu-backdrop" class="menu-backdrop md:hidden z-40"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 shadow-lg md:hidden z-50">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <span class="text-xl font-semibold playfair text-gray-800">Menu</span>
+                    <button id="close-menu" class="p-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-100 rounded-lg focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">Home</a>
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">Features</a>
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">Pricing</a>
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">About</a>
+                    <!-- <div class="pt-4">
+                        <button class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200">
+                            Get Started
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main data-scroll-section class="scroll-content relative overflow-hidden">
+            <div id="particles-js" class="hero-gradient"></div>
+            
+            <div class="content-wrapper min-h-screen pt-20 px-4 md:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+                        <!-- Left Column - Text Content -->
+                        <div class="text-blue-950" data-aos="fade-right">
+                            <h1 class="text-4xl md:text-6xl font-bold playfair mb-6">
+                                Transform Your <br/>
+                                <span class="text-blue-600">Financial Future</span>
+                            </h1>
+                            <p class="text-xl text-blue-900 mb-8 max-w-lg">
+                                Experience seamless payments powered by cutting-edge technology. Fast, secure, and built for tomorrow.
+                            </p>
+                            
+                            <!-- CTA Buttons -->
+                            <div class="flex flex-wrap gap-4 mb-12">
+                                <button class="shine-effect bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-300">
+                                    Get Started
+                                </button>
+                                <button class="border border-black text-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white transition-colors duration-300">
+                                    Watch Demo
+                                </button>
+                            </div>
+    
+                            <!-- Stats Cards -->
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div class="hero-card rounded-xl bg-gray-900 p-4 text-center">
+                                    <h3 class="text-2xl font-bold mb-1 text-white">2M+</h3>
+                                    <p class="text-blue-200">Active Users</p>
+                                </div>
+                                <div class="hero-card rounded-xl bg-gray-900 p-4 text-center">
+                                    <h3 class="text-2xl font-bold  mb-1 text-white">99.9%</h3>
+                                    <p class="text-blue-200">Uptime</p>
+                                </div>
+                                <div class="hero-card rounded-xl p-4 bg-gray-900 text-center">
+                                    <h3 class="text-2xl font-bold mb-1 text-white">$1B+</h3>
+                                    <p class="text-blue-200">Processed</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Right Column - Animation -->
+                        <div class="relative" data-aos="fade-left">
+                            <!-- Lottie Animation Container -->
+                            <div id="lottie-container" class="float-animation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Initialize Locomotive Scroll
+        // const scroll = new LocomotiveScroll({
+        //     el: document.querySelector('[data-scroll-container]'),
+        //     smooth: true,
+        //     smoothMobile: false,
+        //     multiplier: 1
+        // });
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuBackdrop = document.getElementById('menu-backdrop');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            menuBackdrop.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMenu);
+        closeMenuButton.addEventListener('click', toggleMenu);
+        menuBackdrop.addEventListener('click', toggleMenu);
+
+        // Update Locomotive Scroll on window resize
+        window.addEventListener('resize', () => {
+            scroll.update();
+        });
+
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    animation: { enable: true, speed: 2, minimumValue: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: false,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    outModes: { default: 'bounce' },
+                    attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detectsOn: 'canvas',
+                events: {
+                    onHover: { enable: true, mode: 'grab' },
+                    onClick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, lineLinked: { opacity: 1 } },
+                    push: { quantity: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Initialize Lottie Animation
+        lottie.loadAnimation({
+            container: document.getElementById('lottie-container'),
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'hero_pic.json' // Payment/Wallet animation
+        });
+    </script>
+</body>
+</html>

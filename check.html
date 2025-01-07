@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+    }
+
+    .loader-container {
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .title {
+      color: #1e293b;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    /* Card Processing Loader */
+    .card-loader {
+      width: 80px;
+      height: 50px;
+      background: #2563eb;
+      border-radius: 8px;
+      position: relative;
+      animation: cardMove 1.5s ease-in-out infinite;
+      margin: 0 auto;
+    }
+
+    .card-loader::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+      border-radius: 8px;
+      animation: colorShift 1.5s ease-in-out infinite;
+    }
+
+    .card-loader::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 65%;
+      width: 70%;
+      height: 3px;
+      background: #ffffff;
+      border-radius: 2px;
+      z-index: 1;
+      margin-left: 15%;
+    }
+
+    @keyframes cardMove {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-10px) rotate(-3deg); }
+    }
+
+    @keyframes colorShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Circular Progress Loader */
+    .circle-loader {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 4px solid #e2e8f0;
+      border-top-color: #2563eb;
+      animation: spin 1s linear infinite;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .circle-loader::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: #60a5fa;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Processing Dots Loader */
+    .processing-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 auto;
+    }
+
+    .processing-dot {
+      width: 12px;
+      height: 12px;
+      background: #2563eb;
+      border-radius: 50%;
+      animation: processingDot 1.4s ease-in-out infinite;
+    }
+
+    .processing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+      background: #3b82f6;
+    }
+
+    .processing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+      background: #60a5fa;
+    }
+
+    @keyframes processingDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* Secure Payment Scanner */
+    .scanner-loader {
+      width: 80px;
+      height: 50px;
+      background: #2563eb;
+      border-radius: 8px;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .scanner-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: #ffffff;
+      animation: scan 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scan {
+      0% { top: 0; }
+      50% { top: 100%; }
+      100% { top: 0; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="loader-container">
+    <h2 class="title">Card Processing Animation</h2>
+    <div class="card-loader"></div>
+  </div>
+
+  <div class="loader-container">
+    <h2 class="title">Circular Progress</h2>
+    <div class="circle-loader"></div>
+  </div>
+
+  <div class="loader-container">
+    <h2 class="title">Processing Payment</h2>
+    <div class="processing-loader">
+      <div class="processing-dot"></div>
+      <div class="processing-dot"></div>
+      <div class="processing-dot"></div>
+    </div>
+  </div>
+
+  <div class="loader-container">
+    <h2 class="title">Secure Payment Scanner</h2>
+    <div class="scanner-loader">
+      <div class="scanner-line"></div>
+    </div>
+  </div>
+</body>
+</html>

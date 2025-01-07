@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Payments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/locomotive-scroll/4.1.4/locomotive-scroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        
+        .playfair {
+            font-family: "Playfair Display", serif;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #4F46E5;
+            transition: width 0.3s ease-in-out;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-link {
+            position: relative;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+            padding-left: 1.5rem;
+        }
+
+        .menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Smooth Scroll Styles */
+        html.has-scroll-smooth {
+            overflow: hidden;
+        }
+
+        .scroll-content {
+            min-height: 100vh;
+        }
+        .hero-gradient {
+            /* background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%); */
+            /* background-image: linear-gradient(to top, #303030 0%, #a6c1ee 100%); */
+            /* background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%); */
+            /* background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+             */
+             /* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
+             background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+        }
+
+        .hero-card {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Smooth Scroll Styles */
+        html.has-scroll-smooth {
+            overflow: hidden;
+        }
+
+        .scroll-content {
+            min-height: 100vh;
+        }
+
+        /* Animation Classes */
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        .gradient-border {
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(to right, #4F46E5, #06B6D4) border-box;
+            border: 2px solid transparent;
+        }
+
+        .feature-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-10px);
+        }
+
+        .progress-bar {
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .number-counter {
+            display: inline-block;
+            animation: countUp 2s ease-out forwards;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .ripple-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, #4F46E510 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover .ripple-background {
+            opacity: 1;
+        }
+
+        .glow-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glow-effect:hover::after {
+            opacity: 0.1;
+        }
+
+        .circle-progress {
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+        #feature-stats
+        {
+            background-image: linear-gradient(to right, #00487f 0%, #517fa4 100%);
+        }
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .connecting-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, #4F46E5, #06B6D4);
+            top: 30%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            .connecting-line {
+                display: none;
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .hexagon {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.2),
+                        0 0 30px rgba(74, 222, 128, 0.1);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: float 6s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -10px) rotate(90deg); }
+            50% { transform: translate(0, -20px) rotate(180deg); }
+            75% { transform: translate(-10px, -10px) rotate(270deg); }
+        }
+
+        .cyber-grid {
+            background-image: linear-gradient(rgba(74, 222, 128, 0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(74, 222, 128, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .feature-ring {
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+        }
+
+        .integration-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .integration-card:hover {
+            transform: perspective(1000px) rotateY(10deg) translateY(-5px);
+            box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cyber-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(74, 222, 128, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div data-scroll-container>
+        <nav class="bg-white shadow-sm fixed w-full z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center" data-aos="fade-right">
+                        <span class="text-2xl font-semibold playfair text-gray-800">Futuristic <span class="text-blue-400">Pay</span></span>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex items-center space-x-8" data-aos="fade-left">
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">Home</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">Features</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">Pricing</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors duration-200">About</a>
+                        <button class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200">
+                            Get Started
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-button" class="text-gray-700 hover:text-indigo-600 focus:outline-none p-2 rounded-lg hover:bg-gray-100">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Backdrop -->
+        <div id="menu-backdrop" class="menu-backdrop md:hidden z-40"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 shadow-lg md:hidden z-50">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <span class="text-xl font-semibold playfair text-gray-800">Menu</span>
+                    <button id="close-menu" class="p-2 text-gray-700 hover:text-indigo-600 hover:bg-gray-100 rounded-lg focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">Home</a>
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">Features</a>
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">Pricing</a>
+                    <a href="#" class="mobile-nav-link text-gray-700 hover:text-indigo-600">About</a>
+                    <!-- <div class="pt-4">
+                        <button class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200">
+                            Get Started
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main data-scroll-section class="scroll-content relative overflow-hidden">
+            <div id="particles-js" class="hero-gradient"></div>
+            
+            <div class="content-wrapper min-h-screen pt-20 px-4 md:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+                        <!-- Left Column - Text Content -->
+                        <div class="text-white" data-aos="fade-right">
+                            <h1 class="text-4xl md:text-6xl font-bold playfair mb-6 text-center lg:text-left">
+                                Transform Your <br/>
+                                <span class="text-blue-200">Financial Future</span>
+                            </h1>
+                            
+                            <p class="text-xl text-blue-100 mb-8 max-w-lg lg:block hidden">
+                                Experience seamless payments powered by cutting-edge technology. Fast, secure, and built for tomorrow.
+                            </p>
+                            
+                            <!-- CTA Buttons -->
+                            <div class="flex flex-wrap gap-4 mb-12 hidden lg:flex">
+                                <button class="shine-effect bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-300 flex items-center space-x-2">
+                                    <i class="fas fa-rocket"></i> <!-- Font Awesome Icon -->
+                                    <span>Get Started</span>
+                                </button>
+                                <button class="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors duration-300 flex items-center">
+                                    <i class="fab fa-google-play mr-2 text-blue-600 text-xl"></i> <!-- Font Awesome Google Play icon -->
+                                    Download Now
+                                </button>
+                            </div>
+    
+                            <!-- Stats Cards -->
+                            <div class=" grid-cols-2 md:grid-cols-3 gap-4 hidden lg:grid">
+                                <div class="hero-card rounded-xl p-4 text-center">
+                                    <h3 class="text-2xl font-bold mb-1">2M+</h3>
+                                    <p class="text-blue-200">Active Users</p>
+                                </div>
+                                <div class="hero-card rounded-xl p-4 text-center">
+                                    <h3 class="text-2xl font-bold mb-1">99.9%</h3>
+                                    <p class="text-blue-200">Uptime</p>
+                                </div>
+                                <div class="hero-card rounded-xl p-4 text-center">
+                                    <h3 class="text-2xl font-bold mb-1">$1B+</h3>
+                                    <p class="text-blue-200">Processed</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Right Column - Animation -->
+                        <div class="relative " data-aos="fade-left">
+                            <!-- Lottie Animation Container -->
+                            <div id="lottie-container" class=""></div>
+                        </div>
+                        <!-- Mobile stats card -->
+                        <div class="flex flex-row gap-4 block lg:hidden text-white">
+                            <div class="hero-card rounded-xl p-4 text-center flex-1">
+                                <h3 class="text-2xl font-bold mb-1">2M+</h3>
+                                <p class="text-blue-200">Active Users</p>
+                            </div>
+                            <div class="hero-card rounded-xl p-4 text-center flex-1">
+                                <h3 class="text-2xl font-bold mb-1">99.9%</h3>
+                                <p class="text-blue-200">Uptime</p>
+                            </div>
+                            <div class="hero-card rounded-xl p-4 text-center flex-1">
+                                <h3 class="text-2xl font-bold mb-1">$1B+</h3>
+                                <p class="text-blue-200">Processed</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <section class="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+            <!-- Background Decorations -->
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute top-20 left-20 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+                <div class="absolute bottom-20 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+            </div>
+    
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <!-- Section Header -->
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
+                        Why Choose Futuristic Pay?
+                    </h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                        Experience the next generation of payment solutions with our cutting-edge technology and unmatched services.
+                    </p>
+                </div>
+    
+                <!-- Feature Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Security Card -->
+                    <div class="feature-card gradient-border rounded-2xl p-6 bg-white hover-lift glow-effect" data-tilt data-tilt-max="5" data-aos="fade-up">
+                        <div class="ripple-background"></div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold ml-4 text-gray-800">Advanced Security</h3>
+                        </div>
+                        <p class="text-gray-600">End-to-end encryption and multi-factor authentication keep your transactions secure.</p>
+                        <div class="mt-4 h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="progress-bar bg-indigo-600 h-full rounded-full" data-progress="95"></div>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500 text-right">
+                            Security Score: <span class="number-counter font-semibold text-indigo-600">95</span>%
+                        </div>
+                    </div>
+    
+                    <!-- Speed Card -->
+                    <div class="feature-card gradient-border rounded-2xl p-6 bg-white hover-lift glow-effect" data-tilt data-tilt-max="5" data-aos="fade-up" data-aos-delay="100">
+                        <div class="ripple-background"></div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold ml-4 text-gray-800">Lightning Fast</h3>
+                        </div>
+                        <p class="text-gray-600">Process transactions in milliseconds with our optimized payment infrastructure.</p>
+                        <div class="mt-4">
+                            <svg class="w-full" height="40">
+                                <circle class="circle-progress" cx="20" cy="20" r="16" stroke="#E5E7EB" stroke-width="4" fill="none"/>
+                                <circle class="circle-progress" cx="20" cy="20" r="16" stroke="#2563EB" stroke-width="4" fill="none" stroke-dasharray="100" stroke-dashoffset="25"/>
+                                <text x="20" y="25" text-anchor="middle" class="text-xs font-semibold">0.1s</text>
+                            </svg>
+                        </div>
+                    </div>
+    
+                    <!-- Global Card -->
+                    <div class="feature-card gradient-border rounded-2xl p-6 bg-white hover-lift glow-effect" data-tilt data-tilt-max="5" data-aos="fade-up" data-aos-delay="200">
+                        <div class="ripple-background"></div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold ml-4 text-gray-800">Global Reach</h3>
+                        </div>
+                        <p class="text-gray-600">Support for 150+ countries and multiple currencies with real-time conversion.</p>
+                        <div class="mt-4 relative h-24">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-2xl font-bold text-emerald-600 number-counter">150</span>
+                                <span class="text-gray-500 ml-1">Countries</span>
+                            </div>
+                            <div class="absolute inset-0 opacity-10">
+                                <div class="w-full h-full bg-emerald-500 rounded-full animate-ping"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Stats Section -->
+                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-3xl p-8 shadow-lg" data-aos="fade-up">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-indigo-600 mb-2">
+                                <span class="number-counter">99.9</span>%
+                            </div>
+                            <p class="text-gray-600">Uptime</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-600 mb-2">
+                                <span class="number-counter">50</span>M+
+                            </div>
+                            <p class="text-gray-600">Transactions</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-indigo-600 mb-2">
+                                <span class="number-counter">180</span>+
+                            </div>
+                            <p class="text-gray-600">Countries</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-600 mb-2">
+                                $<span class="number-counter">1</span>B
+                            </div>
+                            <p class="text-gray-600">Processed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-20 bg-gradient-to-b from-purple-50 to-gray-100 relative overflow-hidden">
+            <!-- Background Elements -->
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute top-40 right-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+                <div class="absolute bottom-40 left-20 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+            </div>
+    
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <!-- Section Header -->
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
+                        How It Works
+                    </h2>
+                    <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                        Get started with Futuristic Pay in three simple steps. Our streamlined process makes payments easier than ever.
+                    </p>
+                </div>
+    
+                <!-- Steps Container -->
+                <div class="relative">
+                    <!-- Connecting Lines (visible only on desktop) -->
+                    <div class="hidden md:block">
+                        <div class="connecting-line left-1/4 w-1/4"></div>
+                        <div class="connecting-line right-1/4 w-1/4"></div>
+                    </div>
+    
+                    <!-- Steps Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+                        <!-- Step 1: Sign Up -->
+                        <div class="step-card bg-white rounded-2xl p-8 shadow-lg" data-aos="fade-right">
+                            <div class="relative h-48 mb-6">
+                                <img src="sign_up.svg" alt="Sign Up Illustration" class="w-full h-full object-contain floating"/>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl font-bold mb-4 mx-auto">
+                                    1
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-4">Create Account</h3>
+                                <p class="text-gray-600">Sign up in minutes with our simple onboarding process. Just provide basic details and verify your identity.</p>
+                            </div>
+                        </div>
+    
+                        <!-- Step 2: Connect -->
+                        <div class="step-card bg-white rounded-2xl p-8 shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                            <div class="relative h-48 mb-6">
+                                <img src="connect.svg" alt="Connect Illustration" class="w-full h-full object-contain floating"/>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold mb-4 mx-auto">
+                                    2
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-4">Connect Payment Methods</h3>
+                                <p class="text-gray-600">Link your preferred payment methods securely. We support credit cards, bank accounts, and digital wallets.</p>
+                            </div>
+                        </div>
+    
+                        <!-- Step 3: Transact -->
+                        <div class="step-card bg-white rounded-2xl p-8 shadow-lg" data-aos="fade-left" data-aos-delay="200">
+                            <div class="relative h-48 mb-6">
+                                <img src="transact.svg" alt="Transact Illustration" class="w-full h-full object-contain floating"/>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl font-bold mb-4 mx-auto">
+                                    3
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-4">Start Transacting</h3>
+                                <p class="text-gray-600">Begin sending and receiving payments instantly. Monitor your transactions in real-time through our dashboard.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- CTA Section -->
+                <div class="mt-16 text-center" data-aos="fade-up">
+                    <a href="#" class="inline-flex items-center px-8 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-semibold text-lg transition-transform hover:scale-105">
+                        Get Started Now
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+   
+        <section class="relative py-20 overflow-hidden">
+            <!-- Cyber Grid Background -->
+            <div class="absolute inset-0 cyber-grid opacity-20"></div>
+    
+            <!-- Floating Particles -->
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="particle top-1/4 left-1/4 w-4 h-4 bg-emerald-500/20 rotate-45"></div>
+                <div class="particle top-3/4 left-1/3 w-6 h-6 bg-blue-500/20 hexagon"></div>
+                <div class="particle top-1/2 right-1/4 w-8 h-8 bg-purple-500/20 rounded-full"></div>
+            </div>
+    
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <!-- Header Section -->
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <div class="inline-block">
+                        <div class="relative">
+                            <h2 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-500 to-purple-600 mb-6">
+                                Ecosystem Integration Hub
+                            </h2>
+                            <div class="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-blue-500 to-purple-600 rounded-lg blur opacity-20"></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-xl max-w-2xl mx-auto">
+                        Connect your entire tech stack through our advanced integration network
+                    </p>
+                </div>
+    
+                <!-- Main Integration Hub -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                    <!-- Integration Categories -->
+                    <div class="integration-card bg-gray-800/50 p-8 rounded-2xl border border-gray-700" data-aos="fade-right">
+                        <div class="relative">
+                            <div class="hexagon bg-emerald-500/10 w-16 h-16 flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Payment Systems</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                                    <span class="text-gray-300">Stripe Integration</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                                    <span class="text-gray-300">PayPal Connect</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                                    <span class="text-gray-300">Square API</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="integration-card bg-gray-800/50 p-8 rounded-2xl border border-gray-700" data-aos="fade-up">
+                        <div class="relative">
+                            <div class="hexagon bg-blue-500/10 w-16 h-16 flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Security & Compliance</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                                    <span class="text-gray-300">KYC Verification</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                                    <span class="text-gray-300">Fraud Detection</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                                    <span class="text-gray-300">Data Encryption</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="integration-card bg-gray-800/50 p-8 rounded-2xl border border-gray-700" data-aos="fade-left">
+                        <div class="relative">
+                            <div class="hexagon bg-purple-500/10 w-16 h-16 flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Analytics & Reporting</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                    <span class="text-gray-300">Real-time Metrics</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                    <span class="text-gray-300">Custom Reports</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                    <span class="text-gray-300">Data Visualization</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Interactive Feature Ring -->
+                <div class="relative h-[400px] mb-20" data-aos="zoom-in">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <!-- Central Hub -->
+                        <div class="absolute w-32 h-32 bg-gray-800 rounded-full flex items-center justify-center z-10 neon-glow">
+                            <div class="text-emerald-400 text-lg font-bold">Hub</div>
+                        </div>
+                        <!-- Rotating Feature Ring -->
+                        <div class="feature-ring w-[300px] h-[300px] border-2 border-gray-700 rounded-full relative">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-4 rounded-xl">
+                                <div class="text-emerald-400">API</div>
+                            </div>
+                            <div class="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-800 p-4 rounded-xl">
+                                <div class="text-blue-400">SDK</div>
+                            </div>
+                            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-gray-800 p-4 rounded-xl">
+                                <div class="text-purple-400">Webhooks</div>
+                            </div>
+                            <div class="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-4 rounded-xl">
+                                <div class="text-pink-400">Events</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Stats Section -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16" data-aos="fade-up">
+                    <div class="cyber-button bg-gray-800/50 p-6 rounded-xl border border-gray-700 text-center">
+                        <div class="text-4xl font-bold text-emerald-400 mb-2">500+</div>
+                        <div class="text-gray-400">Integration Partners</div>
+                    </div>
+                    <div class="cyber-button bg-gray-800/50 p-6 rounded-xl border border-gray-700 text-center">
+                        <div class="text-4xl font-bold text-blue-400 mb-2">10ms</div>
+                        <div class="text-gray-400">Average Response</div>
+                    </div>
+                    <div class="cyber-button bg-gray-800/50 p-6 rounded-xl border border-gray-700 text-center">
+                        <div class="text-4xl font-bold text-purple-400 mb-2">99.99%</div>
+                        <div class="text-gray-400">Uptime</div>
+                    </div>
+                    <div class="cyber-button bg-gray-800/50 p-6 rounded-xl border border-gray-700 text-center">
+                        <div class="text-4xl font-bold text-pink-400 mb-2">24/7</div>
+                        <div class="text-gray-400">Support Available</div>
+                    </div>
+                </div>
+    
+                <!-- Integration Process -->
+                <div class="relative" data-aos="fade-up">
+                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-purple-500/10 blur-3xl"></div>
+                    <div class="relative bg-gray-800/50 rounded-3xl p-8 border border-gray-700">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="hexagon bg-emerald-500/10 w-20 h-20 flex items-center justify-center mb-6">
+                                    <span class="text-3xl font-bold text-emerald-400">1</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white mb-3">Connect</h4>
+                                <p class="text-gray-400">Initialize integration with our secure API keys and SDK</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="hexagon bg-blue-500/10 w-20 h-20 flex items-center justify-center mb-6">
+                                    <span class="text-3xl font-bold text-blue-400">2</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white mb-3">Configure</h4>
+                                <p class="text-gray-400">Customize settings and webhooks to match your needs</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="hexagon bg-purple-500/10 w-20 h-20 flex items-center justify-center mb-6">
+                                    <span class="text-3xl font-bold text-purple-400">3</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white mb-3">Launch</h4>
+                                <p class="text-gray-400">Go live with your integration in minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- CTA Section -->
+                <div class="text-center mt-20" data-aos="fade-up">
+                    <button class="cyber-button bg-gradient-to-r from-emerald-500 to-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform">
+                        Explore Integrations
+                        <div class="absolute inset-0 border border-white/25 rounded-xl"></div>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let dynamic_autoplay = false;
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Initialize Locomotive Scroll
+        // const scroll = new LocomotiveScroll({
+        //     el: document.querySelector('[data-scroll-container]'),
+        //     smooth: true,
+        //     smoothMobile: false,
+        //     multiplier: 1
+        // });
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuBackdrop = document.getElementById('menu-backdrop');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            menuBackdrop.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMenu);
+        closeMenuButton.addEventListener('click', toggleMenu);
+        menuBackdrop.addEventListener('click', toggleMenu);
+
+        // Update Locomotive Scroll on window resize
+        window.addEventListener('resize', () => {
+            scroll.update();
+        });
+
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    animation: { enable: true, speed: 2, minimumValue: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: false,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    outModes: { default: 'bounce' },
+                    attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detectsOn: 'canvas',
+                events: {
+                    onHover: { enable: true, mode: 'grab' },
+                    onClick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, lineLinked: { opacity: 1 } },
+                    push: { quantity: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Initialize Lottie Animation
+      var animation =  lottie.loadAnimation({
+            container: document.getElementById('lottie-container'),
+            renderer: 'svg',
+            loop: dynamic_autoplay,
+            autoplay:true ,
+            path: 'hero_pic.json' // Payment/Wallet animation
+        });
+        document.getElementById('lottie-container').addEventListener('click', function(){
+            dynamic_autoplay = !dynamic_autoplay;
+            // alert(dynamic_autoplay);
+            animation.destroy();
+            animation = lottie.loadAnimation({
+        container: document.getElementById('lottie-container'),
+        renderer: 'svg',
+        loop: dynamic_autoplay,
+        autoplay:true ,
+        path: 'hero_pic.json' // Path to your animation file
+    });
+            
+        })
+
+
+        VanillaTilt.init(document.querySelectorAll(".feature-card"), {
+            max: 25,
+            speed: 450,
+            glare: true,
+            "max-glare": 0.2,
+        },
+      );
+        VanillaTilt.init(  document.querySelectorAll(".integration-card"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+        });
+
+        // Progress Bar Animation
+        function animateProgressBars() {
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                const progress = bar.dataset.progress;
+                bar.style.width = `${progress}%`;
+            });
+        }
+
+        // Number Counter Animation
+        function animateNumbers() {
+            document.querySelectorAll('.number-counter').forEach(counter => {
+                const target = parseFloat(counter.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const duration = 2000;
+                const step = duration / 50;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.round(current * 10) / 10;
+                        setTimeout(updateCounter, step);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateProgressBars();
+                    animateNumbers();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+        VanillaTilt.init(document.querySelectorAll(".integration-card"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+        });
+
+        // Add floating animation to particles
+        document.querySelectorAll('.particle').forEach(particle => {
+            particle.style.animation = `float ${5 + Math.random() * 5}s infinite`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+        });
+    </script>
+</body>
+</html>
